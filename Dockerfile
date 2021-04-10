@@ -12,7 +12,6 @@ FROM ghcr.io/krsuhjunho/centos7-base-systemd
 #########################################################################
 
 RUN yum install -y -q httpd \
-	systemctl enable httpd;\
 	yum clean all
 
 
@@ -21,7 +20,7 @@ RUN yum install -y -q httpd \
 RUN  rpm -Uvh http://rpms.remirepo.net/enterprise/remi-release-7.rpm
 
 # Install PHP
-RUN yum --enablerepo=remi-php73 -y install php php-bcmath php-cli php-common php-gd php-intl php-ldap php-mbstring php-mysqlnd php-pear php-soap php-xml php-xmlrpc php-zip php-curl php-fpm php-gmp php-json php-sqlite3 php-bz2 zip unzip  
+RUN yum --enablerepo=remi-php74 -y install php php-bcmath php-cli php-common php-gd php-intl php-ldap php-mbstring php-mysqlnd php-pear php-soap php-xml php-xmlrpc php-zip php-curl php-fpm php-gmp php-json php-sqlite3 php-bz2 zip unzip  
 
 # Update Apache Configuration
 RUN sed -E -i -e '/<Directory "\/var\/www\/html">/,/<\/Directory>/s/AllowOverride None/AllowOverride All/' /etc/httpd/conf/httpd.conf
@@ -49,6 +48,7 @@ WORKDIR /var/www
 
 EXPOSE 80
 
+RUN systemctl enable httpd
 
 #########################################################################
 #       Systemd		 	                                        #
